@@ -7,6 +7,12 @@ const ResearchPapers = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const [showUploadForm, setShowUploadForm] = useState(false); // Toggle upload form
+  const [newPaper, setNewPaper] = useState({ title: "", author: "", description: "", file: null });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
   // Function to fetch research papers
   const fetchPapers = async () => {
     setLoading(true);
@@ -27,6 +33,41 @@ const ResearchPapers = () => {
   useEffect(() => {
     fetchPapers();
   }, []);
+
+
+   // Handle form input change
+   const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewPaper({ ...newPaper, [name]: value });
+  };
+
+  // Handle file upload
+  const handleFileChange = (e) => {
+    setNewPaper({ ...newPaper, file: e.target.files[0] });
+  };
+
+  // Handle form submission (Mock Upload)
+  const handleUpload = (e) => {
+    e.preventDefault();
+    if (!newPaper.title || !newPaper.author || !newPaper.description || !newPaper.file) {
+      alert("Please fill all fields and upload a file.");
+      return;
+    }
+
+    // Mock adding paper (In a real app, send this data to the backend)
+    const newEntry = {
+      title: newPaper.title,
+      authors: [{ name: newPaper.author }],
+      description: newPaper.description,
+      publishedDate: new Date().toISOString(),
+      downloadUrl: "#",
+    };
+
+    setPapers([newEntry, ...papers]); // Add new paper to list
+    setShowUploadForm(false); // Hide form
+    setNewPaper({ title: "", author: "", description: "", file: null }); // Reset form
+    alert("Paper uploaded successfully!");
+  };
 
   return (
     <div className="bg-gray-900 text-white min-h-screen p-8">
@@ -68,6 +109,131 @@ const ResearchPapers = () => {
     </button>
   </div>
   </div> */}
+{/* 
+  {/* Upload Button */}
+  {/* <div className="mb-6 text-center">
+          <button
+            onClick={() => setShowUploadForm(!showUploadForm)}
+            className="bg-green-500 text-black px-6 py-2 rounded-lg hover:bg-green-400 transition"
+          >
+            {showUploadForm ? "Cancel Upload" : "Upload Research Paper"}
+          </button>
+        </div>
+
+        {/* Upload Form (Only Visible When Button Clicked) */}
+        {/* {showUploadForm && (
+          <div className="bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+            <h2 className="text-xl font-semibold mb-4">Upload Research Paper</h2>
+            <form onSubmit={handleUpload}>
+              <input
+                type="text"
+                name="title"
+                placeholder="Title"
+                value={newPaper.title}
+                onChange={handleInputChange}
+                className="w-full p-3 mb-3 bg-gray-700 text-white rounded-lg"
+                required
+              />
+              <input
+                type="text"
+                name="author"
+                placeholder="Author"
+                value={newPaper.author}
+                onChange={handleInputChange}
+                className="w-full p-3 mb-3 bg-gray-700 text-white rounded-lg"
+                required
+              />
+              <textarea
+                name="description"
+                placeholder="Description"
+                value={newPaper.description}
+                onChange={handleInputChange}
+                className="w-full p-3 mb-3 bg-gray-700 text-white rounded-lg"
+                required */}
+              {/* />
+              <input
+                type="file"
+                accept=".pdf"
+                onChange={handleFileChange}
+                className="w-full p-3 mb-3 bg-gray-700 text-white rounded-lg"
+                required
+              />
+              <button
+                type="submit"
+                className="w-full bg-green-500 text-black px-6 py-2 rounded-lg hover:bg-green-400 transition"
+              >
+                Upload Paper
+              </button>
+            </form>
+          </div> */}
+        {/* // )} */} 
+
+
+<div className="mb-6 text-center">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-green-500 text-black px-6 py-2 rounded-lg hover:bg-green-400 transition"
+          >
+            Upload Research Paper
+          </button>
+        </div>
+
+        {isModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+            <div className="bg-gray-800 p-6 rounded-lg shadow-lg max-w-lg w-full relative">
+              <h2 className="text-xl font-semibold mb-4 text-green-400">Upload Research Paper</h2>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="absolute top-3 right-4 text-gray-400 hover:text-white text-xl"
+              >
+                ✖
+              </button>
+              <form onSubmit={handleUpload}>
+                <input
+                  type="text"
+                  name="title"
+                  placeholder="Title"
+                  value={newPaper.title}
+                  onChange={handleInputChange}
+                  className="w-full p-3 mb-3 bg-gray-700 text-white rounded-lg focus:ring-2 focus:ring-green-400"
+                  required
+                />
+                <input
+                  type="text"
+                  name="author"
+                  placeholder="Author"
+                  value={newPaper.author}
+                  onChange={handleInputChange}
+                  className="w-full p-3 mb-3 bg-gray-700 text-white rounded-lg focus:ring-2 focus:ring-green-400"
+                  required
+                />
+                <textarea
+                  name="description"
+                  placeholder="Description"
+                  value={newPaper.description}
+                  onChange={handleInputChange}
+                  className="w-full p-3 mb-3 bg-gray-700 text-white rounded-lg focus:ring-2 focus:ring-green-400"
+                  required
+                />
+                <input
+                  type="file"
+                  accept=".pdf"
+                  onChange={handleFileChange}
+                  className="w-full p-3 mb-3 bg-gray-700 text-white rounded-lg"
+                  required
+                />
+                <button
+                  type="submit"
+                  className="w-full bg-green-500 text-black px-6 py-2 rounded-lg hover:bg-green-400 transition"
+                >
+                  Upload Paper
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
+
+
 
         {/* Loading Indicator */}
         {loading && <p className="text-center text-lg">Loading...</p>}

@@ -14,12 +14,12 @@ const Navbar = () => {
         {/* Navigation Links (Centered) */}
         <div className="flex-1 flex justify-center gap-6 text-gray-300 flex-nowrap">
           <Link to="/" className="hover:text-green-400 transition duration-300 whitespace-nowrap">Home</Link>
-          <Link to="/papers" className="hover:text-green-400 transition duration-300 whitespace-nowrap">Research Papers</Link>
+          <Link to="/research-papers" className="hover:text-green-400 transition duration-300 whitespace-nowrap">Research Papers</Link>
           <Link to="/datasets" className="hover:text-green-400 transition duration-300 whitespace-nowrap">Datasets</Link>
           <Link to="/trending" className="hover:text-green-400 transition duration-300 whitespace-nowrap">Trending</Link>
           {/* <Link to="/saved" className="hover:text-green-400 transition duration-300 whitespace-nowrap">Saved Discussions</Link> */}
           <Link to="/discussions" className="hover:text-green-400 transition duration-300 whitespace-nowrap">Discussions</Link>
-
+          
           <Link to="/signup" className="hover:text-green-400 transition duration-300 whitespace-nowrap">Sign Up</Link>
           <Link to="/login" className="hover:text-green-400 transition duration-300 whitespace-nowrap">Login</Link>
         </div>
